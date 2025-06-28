@@ -119,4 +119,24 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  body {
+    background-color: var(--background-bg-background);
+    color: var(--text-text-foreground);
+  }
+
+  /* v4 change : set default button cursor to pointer */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+}
+
+@layer utilities {
+  .dcent-layout {
+    @apply px-4 md:px-6;
+  }
 }
