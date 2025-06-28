@@ -1,14 +1,13 @@
 import { NextResponse } from 'next/server';
-import { mockFavoriteItems } from '@/mocks/discoveryData';
-import { ResponseBaseObject } from '@/apis/common/ResponseBaseObject';
-import { FavoriteItemsResponse } from '@/apis/discovery';
-
-// 즐겨찾기 상태를 관리하는 임시 저장소 (실제로는 데이터베이스 사용)
-let favoriteItemIds = new Set(['1', '2', '3', '4', '5']);
+import { mockItems } from '@/app/api/mocks/discoveryData';
+import { ResponseBaseObject } from '@/client/common/ResponseBaseObject';
+import { FavoriteItemsResponse } from '@/client/discovery';
+import { favoriteItemIds, toggleFavoriteItem } from '../shared-state';
 
 export async function GET() {
   try {
-    const favoriteItems = mockFavoriteItems.filter(item => favoriteItemIds.has(item.id));
+    // mockItems에서 favoriteItemIds에 포함된 아이템들만 필터링
+    const favoriteItems = mockItems.filter(item => favoriteItemIds.has(item.id));
     
     const response: ResponseBaseObject<FavoriteItemsResponse> = {
       error: {
@@ -47,13 +46,23 @@ export async function POST(request: Request) {
       
       return NextResponse.json(errorResponse, { status: 400 });
     }
+
+    // 아이템이 실제로 존재하는지 확인
+    const itemExists = mockItems.some(item => item.id === itemId);
+    if (!itemExists) {
+      const errorResponse: ResponseBaseObject<void> = {
+        error: {
+          code: 404,
+          message: 'Item not found'
+        },
+        payload: undefined
+      };
+      
+      return NextResponse.json(errorResponse, { status: 404 });
+    }
     
     // 즐겨찾기 토글
-    if (favoriteItemIds.has(itemId)) {
-      favoriteItemIds.delete(itemId);
-    } else {
-      favoriteItemIds.add(itemId);
-    }
+    toggleFavoriteItem(itemId);
     
     const response: ResponseBaseObject<void> = {
       error: {
@@ -65,6 +74,7 @@ export async function POST(request: Request) {
     
     return NextResponse.json(response);
   } catch (error) {
+    console.error('즐겨찾기 업데이트 오류:', error);
     const errorResponse: ResponseBaseObject<void> = {
       error: {
         code: 500,

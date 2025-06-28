@@ -1,9 +1,9 @@
-import { ItemDto } from '@/apis/discovery';
+import { ItemDto } from '@/client/discovery';
 
 export const mockItems: ItemDto[] = [
   {
     id: '1',
-    image: '/images/icon_ftso.png',
+    image: '',
     title: 'FLRFarm',
     description: 'https://xff.flr.finance/',
     urls: { web: 'https://xff.flr.finance/', android: 'https://xff.flr.finance/', ios: 'https://xff.flr.finance/' }

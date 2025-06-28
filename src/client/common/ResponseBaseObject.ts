@@ -1,4 +1,4 @@
-import { ErrorBase } from '@/apis/errors/ErrorBase';
+import { ErrorBase } from '@/client/errors/ErrorBase';
 
 export interface ResponseBaseObject<T = any> {
   error: ErrorBase;

@@ -1,4 +1,4 @@
-import { ResponseBaseObject } from '@/apis/common/ResponseBaseObject';
+import { ResponseBaseObject } from '@/client/common/ResponseBaseObject';
 
 export type ItemDto = {
     id: string;
@@ -21,7 +21,14 @@ console.log({API_URL});
 
 export const getFavoriteItems = async (): Promise<ResponseBaseObject<FavoriteItemsResponse>> => {
     const response = await fetch(`${API_URL}/discovery/favorite-items`);
-    return response.json();
+    const data = await response.json();
+    
+    // API 응답의 error.code가 0이 아니면 에러로 처리
+    if (data.error && data.error.code !== 0) {
+        throw new Error(data.error.message || 'Failed to get favorite items');
+    }
+    
+    return data;
 }
 
 export const updateFavoriteItem = async (itemId: string): Promise<ResponseBaseObject<void>> => {
@@ -32,12 +39,26 @@ export const updateFavoriteItem = async (itemId: string): Promise<ResponseBaseOb
         },
         body: JSON.stringify({ itemId }),
     });
-    return response.json();
+    const data = await response.json();
+    
+    // API 응답의 error.code가 0이 아니면 에러로 처리
+    if (data.error && data.error.code !== 0) {
+        throw new Error(data.error.message || 'Failed to update favorite item');
+    }
+    
+    return data;
 }
 
 export const getItems = async (): Promise<ResponseBaseObject<ItemsResponse>> => {   
     const response = await fetch(`${API_URL}/discovery/items`);   
-    return response.json();
+    const data = await response.json();
+    
+    // API 응답의 error.code가 0이 아니면 에러로 처리
+    if (data.error && data.error.code !== 0) {
+        throw new Error(data.error.message || 'Failed to get items');
+    }
+    
+    return data;
 }
 
 export default {
