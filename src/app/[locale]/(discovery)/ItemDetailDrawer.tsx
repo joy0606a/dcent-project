@@ -15,6 +15,8 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
+import { isAndroid, isIOS } from 'react-device-detect';
+
 type ItemDetailDrawerProps = {
   item: ItemDto;
   children: React.ReactNode;
@@ -25,10 +27,13 @@ const ItemDetailDrawer: React.FC<ItemDetailDrawerProps> = ({
   children,
 }) => {
   const handleGoClick = () => {
-    // 우선순위: web > android > ios
-    const url = item.urls.web || item.urls.android || item.urls.ios;
-    if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+    // 디바이스에 따라 다른 경로로 이동
+    if (isAndroid) {
+      window.open(item.urls.android, '_blank', 'noopener,noreferrer');
+    } else if (isIOS) {
+      window.open(item.urls.ios, '_blank', 'noopener,noreferrer');
+    } else {
+      window.open(item.urls.web, '_blank', 'noopener,noreferrer');
     }
   };
 

@@ -1,9 +1,8 @@
 'use client';
 
 import Banner from './Banner';
-import ItemCard from './ItemCard';
+import ItemCard, { ItemCardSkeleton } from './ItemCard';
 import { useItems, useFavoriteItems } from '@/hooks/useDiscovery';
-import { Loader2 } from 'lucide-react';
 
 export default function MainPage() {
   const {
@@ -17,31 +16,53 @@ export default function MainPage() {
     error: favoriteItemsError,
   } = useFavoriteItems();
 
-  if (isItemsLoading || isFavoriteItemsLoading) {
-    return (
-      <main className="dcent-layout-main min-h-screen bg-gray-50 p-4 dark:bg-gray-900">
-        <div className="mx-auto max-w-2xl">
-          <div className="flex min-h-[400px] items-center justify-center">
-            <Loader2 className="h-6 w-6 animate-spin text-gray-500" />
-          </div>
-        </div>
-      </main>
-    );
-  }
+  const renderLoadingSkeleton = () => (
+    <div className="space-y-3">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <ItemCardSkeleton key={`skeleton-${index}`} />
+      ))}
+    </div>
+  );
 
-  if (itemsError || favoriteItemsError) {
+  const renderError = () => (
+    <div className="flex items-center justify-center rounded-lg border border-red-200 bg-red-50 p-4 text-red-600 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+      데이터를 불러오는 중 오류가 발생했습니다.
+    </div>
+  );
+
+  const renderEmpty = () => (
+    <div className="flex items-center justify-center rounded-lg border border-gray-200 bg-gray-50 p-4 text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
+      데이터가 없습니다.
+    </div>
+  );
+
+  const renderFavoriteSection = () => {
+    if (isFavoriteItemsLoading) return renderLoadingSkeleton();
+    if (favoriteItemsError) return renderError();
+    if (favoriteItems.length === 0) return renderEmpty();
+
     return (
-      <main className="dcent-layout-main min-h-screen bg-gray-50 p-4 dark:bg-gray-900">
-        <div className="mx-auto max-w-2xl">
-          <div className="flex min-h-[400px] items-center justify-center">
-            <div className="text-red-500">
-              데이터를 불러오는 중 오류가 발생했습니다.
-            </div>
-          </div>
-        </div>
-      </main>
+      <div className="space-y-3">
+        {favoriteItems.map((item) => (
+          <ItemCard key={item.id} item={item} isBookmarked={true} />
+        ))}
+      </div>
     );
-  }
+  };
+
+  const renderItemsSection = () => {
+    if (isItemsLoading) return renderLoadingSkeleton();
+    if (itemsError) return renderError();
+    if (items.length === 0) return renderEmpty();
+
+    return (
+      <div className="space-y-3">
+        {items.map((item) => (
+          <ItemCard key={item.id} item={item} isBookmarked={false} />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <main className="mb-[80px] min-h-screen bg-gray-50 pb-4 dark:bg-gray-900">
@@ -55,22 +76,14 @@ export default function MainPage() {
             <h2 className="mb-4 text-base font-semibold text-gray-800 dark:text-white">
               즐겨찾기
             </h2>
-            <div className="space-y-3">
-              {favoriteItems.map((item) => (
-                <ItemCard key={item.id} item={item} isBookmarked={true} />
-              ))}
-            </div>
+            {renderFavoriteSection()}
           </div>
 
           <div>
             <h2 className="mt-8 mb-4 text-base font-semibold text-gray-800 dark:text-white">
               목록
             </h2>
-            <div className="space-y-3">
-              {items.map((item) => (
-                <ItemCard key={item.id} item={item} isBookmarked={false} />
-              ))}
-            </div>
+            {renderItemsSection()}
           </div>
         </div>
       </div>

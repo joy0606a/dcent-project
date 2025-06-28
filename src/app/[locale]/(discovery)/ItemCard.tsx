@@ -4,6 +4,7 @@ import React from 'react';
 import { Star, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { clsx } from 'clsx';
+import { isAndroid, isIOS } from 'react-device-detect';
 import { useUpdateFavoriteItem, discoveryKeys } from '@/hooks/useDiscovery';
 import { ItemDto } from '@/client/discovery';
 import { useQueryClient } from '@tanstack/react-query';
@@ -79,29 +80,29 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, isBookmarked = false }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1 text-xs text-blue-600 hover:underline"
-                  onClick={(e) => e.stopPropagation()} // drawer 열리지 않도록 방지
+                  onClick={(e) => e.stopPropagation()}
                 >
                   Web <ExternalLink className="h-3 w-3" />
                 </a>
               )}
-              {item.urls.android && (
+              {item.urls.android && isAndroid && (
                 <a
                   href={item.urls.android}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1 text-xs text-blue-600 hover:underline"
-                  onClick={(e) => e.stopPropagation()} // drawer 열리지 않도록 방지
+                  onClick={(e) => e.stopPropagation()}
                 >
                   Android <ExternalLink className="h-3 w-3" />
                 </a>
               )}
-              {item.urls.ios && (
+              {item.urls.ios && isIOS && (
                 <a
                   href={item.urls.ios}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1 text-xs text-blue-600 hover:underline"
-                  onClick={(e) => e.stopPropagation()} // drawer 열리지 않도록 방지
+                  onClick={(e) => e.stopPropagation()}
                 >
                   iOS <ExternalLink className="h-3 w-3" />
                 </a>
@@ -150,7 +151,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, isBookmarked = false }) => {
   );
 };
 
-export const ListItemCardSkeleton = () => {
+export const ItemCardSkeleton = () => {
   return (
     <div className="flex items-center gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
       <div className="mr-2 flex-shrink-0">
