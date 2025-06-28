@@ -32,6 +32,15 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# Allow specific environment templates and non-local env files to be committed
+!.env.example
+!.env.development
+!.env.staging
+!.env.production
+# But always ignore local and sensitive files
+.env.local
+.env*.local
+.env.keys
 
 # vercel
 .vercel
