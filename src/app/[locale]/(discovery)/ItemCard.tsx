@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { useTranslations } from 'next-intl';
 
 type ItemCardProps = {
   item: ItemDto;
@@ -175,6 +176,8 @@ export const FavoriteItemDialog = ({
   children: React.ReactNode;
   onConfirm: () => void;
 }) => {
+  const t = useTranslations();
+
   const handleConfirm = (e: React.MouseEvent) => {
     e.stopPropagation();
     onConfirm();
@@ -189,14 +192,18 @@ export const FavoriteItemDialog = ({
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>즐겨찾기에서 제거</AlertDialogTitle>
+          <AlertDialogTitle>{t('list.favorite_delete_title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            "{item.title}"를 즐겨찾기에서 제거하시겠습니까?
+            {t('list.favorite_delete_description')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={handleCancel}>취소</AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirm}>제거</AlertDialogAction>
+          <AlertDialogCancel onClick={handleCancel}>
+            {t('buttons.cancel')}
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleConfirm}>
+            {t('buttons.confirm')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

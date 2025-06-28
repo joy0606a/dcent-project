@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { isAndroid, isIOS } from 'react-device-detect';
+import { useTranslations } from 'next-intl';
 
 type ItemDetailDrawerProps = {
   item: ItemDto;
@@ -26,6 +27,8 @@ const ItemDetailDrawer: React.FC<ItemDetailDrawerProps> = ({
   item,
   children,
 }) => {
+  const t = useTranslations();
+
   const handleGoClick = () => {
     // 디바이스에 따라 다른 경로로 이동
     if (isAndroid) {
@@ -75,7 +78,7 @@ const ItemDetailDrawer: React.FC<ItemDetailDrawerProps> = ({
           {/* Description */}
           <div className="mb-8 w-full">
             <h3 className="mb-3 text-lg font-semibold text-gray-900">
-              Description
+              {t('list.description')}
             </h3>
             <DrawerDescription className="text-base leading-relaxed text-gray-600">
               {item.description}
@@ -90,7 +93,7 @@ const ItemDetailDrawer: React.FC<ItemDetailDrawerProps> = ({
               size="lg"
               className="w-full rounded-full bg-green-500 py-4 text-lg font-semibold text-white transition-colors hover:bg-green-600 active:bg-green-700"
             >
-              Go
+              {t('list.go_to_dapp')}
             </Button>
           </DrawerFooter>
         )}

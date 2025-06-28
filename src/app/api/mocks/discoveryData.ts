@@ -1,5 +1,28 @@
 import { ItemDto } from '@/client/discovery';
 
+// locale에 따른 번역 데이터 가져오기
+function getTranslations(locale: string) {
+  try {
+    if (locale.startsWith('ko')) {
+      return require('../../../../messages/ko.json');
+    }
+    return require('../../../../messages/en.json');
+  } catch (error) {
+    // fallback to English
+    return require('../../../../messages/en.json');
+  }
+}
+
+// 번역된 텍스트 가져오기
+function getTranslatedText(key: string, translations: any): string {
+  if (key.includes('_')) {
+    // dapps 섹션의 키인 경우
+    return translations.dapps?.[key] || key;
+  }
+  // 그냥 원본 텍스트인 경우
+  return key;
+}
+
 export const mockItems: ItemDto[] = [
   {
     id: '1',
@@ -15,7 +38,7 @@ export const mockItems: ItemDto[] = [
   {
     id: '2',
     image: '/images/icon_opensea.png',
-    title: 'Create NFTs | OpenSea',
+    title: 'opensea_create_title',
     description: 'https://opensea.io/asset/create',
     urls: {
       web: 'https://opensea.io/asset/create',
@@ -37,9 +60,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '4',
     image: '/images/icon_buy.png',
-    title: '암호화폐 구매',
-    description:
-      '다양한 파트너로 구성된 네트워크를 통해 100여 종의 암호화폐를 안전하게 구매할 수 있습니다.',
+    title: 'buy_crypto_title',
+    description: 'buy_crypto_description',
     urls: {
       web: 'https://dcent.co/buy-crypto',
       android: 'https://dcent.co/buy-crypto',
@@ -49,9 +71,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '5',
     image: '',
-    title: '메타마스크 연동',
-    description:
-      '디센트 지갑에 있는 EVM 계열의 주소를 메타마스크와 연동하여 더 편리하게 DeFi를 이용하세요.',
+    title: 'metamask_connect_title',
+    description: 'metamask_connect_description',
     urls: {
       web: 'https://metamask.io/connect',
       android: 'https://metamask.io/connect',
@@ -61,9 +82,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '6',
     image: '/images/icon_astar.png',
-    title: '아스타포탈',
-    description:
-      '아스타포탈은 Astar Network에서 제공하는 dApp 스테이킹 플랫폼으로 다양한 프로젝트에 참여할 수 있습니다.',
+    title: 'astar_portal_title',
+    description: 'astar_portal_description',
     urls: {
       web: 'https://portal.astar.network',
       android: 'https://portal.astar.network',
@@ -73,9 +93,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '7',
     image: '/images/icon_ftso.png',
-    title: 'FTSO Portal',
-    description:
-      'FTSO Portal은 사용자가 원하는 FTSO provider에게 FLR을 위임하여 리워드를 받을 수 있는 서비스입니다.',
+    title: 'ftso_portal_title',
+    description: 'ftso_portal_description',
     urls: {
       web: 'https://ftso.fi',
       android: 'https://ftso.fi',
@@ -85,9 +104,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '8',
     image: '',
-    title: 'KLAYswap',
-    description:
-      '클레이스왑은 유동성 풀 기반의 KLAY, ETH, USDT 등 다양한 토큰을 교환할 수 있는 DEX입니다.',
+    title: 'klayswap_title',
+    description: 'klayswap_description',
     urls: {
       web: 'https://klayswap.com',
       android: 'https://klayswap.com',
@@ -97,9 +115,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '9',
     image: '',
-    title: 'Tokamak DAO',
-    description:
-      'Tokamak DAO는 토카막 네트워크 토큰(TON)을 통해 거버넌스에 참여하고 생태계 발전에 기여할 수 있습니다.',
+    title: 'tokamak_dao_title',
+    description: 'tokamak_dao_description',
     urls: {
       web: 'https://dao.tokamak.network',
       android: 'https://dao.tokamak.network',
@@ -109,9 +126,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '10',
     image: '/images/icon_zapper.png',
-    title: 'Zapper',
-    description:
-      'Zapper는 간단한 인터페이스로 디파이 포트폴리오를 관리하고 다양한 프로토콜에 투자할 수 있습니다.',
+    title: 'zapper_title',
+    description: 'zapper_description',
     urls: {
       web: 'https://zapper.fi',
       android: 'https://zapper.fi',
@@ -121,9 +137,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '11',
     image: '/images/icon_compound.png',
-    title: 'Compound',
-    description:
-      'Compound는 담보를 통해 이자를 얻거나 자산을 대출할 수 있는 탈중앙화 금융 프로토콜입니다.',
+    title: 'compound_title',
+    description: 'compound_description',
     urls: {
       web: 'https://compound.finance',
       android: 'https://compound.finance',
@@ -133,9 +148,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '12',
     image: '/images/icon_pooltogether.png',
-    title: 'PoolTogether',
-    description:
-      'PoolTogether는 저축을 재미있게 하는 이더리움 기반의 무손실 복권 게임 플랫폼입니다.',
+    title: 'pooltogether_title',
+    description: 'pooltogether_description',
     urls: {
       web: 'https://pooltogether.com',
       android: 'https://pooltogether.com',
@@ -145,9 +159,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '13',
     image: '/images/icon_uniswap.png',
-    title: 'Uniswap',
-    description:
-      'Uniswap은 유동성을 공급하고 토큰을 교환할 수 있는 가장 인기 있는 탈중앙화 거래소입니다.',
+    title: 'uniswap_title',
+    description: 'uniswap_description',
     urls: {
       web: 'https://uniswap.org',
       android: 'https://uniswap.org',
@@ -157,9 +170,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '14',
     image: '',
-    title: 'yearn.finance',
-    description:
-      'yearn.finance는 DeFi 서비스를 모아놓은 플랫폼으로 자동화된 수익 농사 전략을 제공합니다.',
+    title: 'yearn_finance_title',
+    description: 'yearn_finance_description',
     urls: {
       web: 'https://yearn.finance',
       android: 'https://yearn.finance',
@@ -169,9 +181,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '15',
     image: '/images/icon_1inch.png',
-    title: '1inch',
-    description:
-      '1inch는 모든 주요 DEX 거래소의 유동성과 가격을 비교하여 최적의 거래 경로를 찾아줍니다.',
+    title: 'oneinch_title',
+    description: 'oneinch_description',
     urls: {
       web: 'https://1inch.io',
       android: 'https://1inch.io',
@@ -181,9 +192,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '16',
     image: '/images/icon_opensea.png',
-    title: 'OpenSea',
-    description:
-      'OpenSea는 수집품, 게임 아이템, 디지털 아트 등 다양한 NFT를 거래할 수 있는 최대 마켓플레이스입니다.',
+    title: 'opensea_title',
+    description: 'opensea_description',
     urls: {
       web: 'https://opensea.io',
       android: 'https://opensea.io',
@@ -193,9 +203,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '17',
     image: '/images/icon_rarible.png',
-    title: 'Rarible',
-    description:
-      'Rarible은 크리에이터 중심의 NFT 마켓 플레이스로 누구나 쉽게 NFT를 만들고 거래할 수 있습니다.',
+    title: 'rarible_title',
+    description: 'rarible_description',
     urls: {
       web: 'https://rarible.com',
       android: 'https://rarible.com',
@@ -205,9 +214,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '18',
     image: '',
-    title: 'KaiaPotter',
-    description:
-      '카이아포터는 해시크래시에서 개발한 간단하고 안전한 카이아 생태계 전용 지갑 서비스입니다.',
+    title: 'kaiapotter_title',
+    description: 'kaiapotter_description',
     urls: {
       web: 'https://kaiapotter.com',
       android: 'https://kaiapotter.com',
@@ -217,9 +225,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '19',
     image: '/images/icon_bluewhale.png',
-    title: '블루웨일 프로토콜',
-    description:
-      '블루웨일 프로토콜은 사용하기 쉬운 디파이 서비스로 안정적인 수익률과 혁신적인 기능을 제공합니다.',
+    title: 'bluewhale_title',
+    description: 'bluewhale_description',
     urls: {
       web: 'https://bluewhale.protocol',
       android: 'https://bluewhale.protocol',
@@ -229,9 +236,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '20',
     image: '',
-    title: '스왑스캐너',
-    description:
-      '스왑스캐너는 클레이튼의 No.1 DEX 애그리게이터로 최적의 거래 경로와 최저 수수료를 제공합니다.',
+    title: 'swapscanner_title',
+    description: 'swapscanner_description',
     urls: {
       web: 'https://swapscanner.io',
       android: 'https://swapscanner.io',
@@ -241,9 +247,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '21',
     image: '',
-    title: 'Intract Quests',
-    description:
-      'Intract 에서는 지금 Tap That Drop 시즌 퀘스트가 진행중입니다. 참여하여 리워드를 받아보세요.',
+    title: 'intract_title',
+    description: 'intract_description',
     urls: {
       web: 'https://intract.io/quests',
       android: 'https://intract.io/quests',
@@ -253,9 +258,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '22',
     image: '',
-    title: 'SKATE Staking',
-    description:
-      'SKATE Staking은 멀티체인 네이티브 스테이킹 플랫폼으로 다양한 체인에서 안정적인 수익을 제공합니다.',
+    title: 'skate_staking_title',
+    description: 'skate_staking_description',
     urls: {
       web: 'https://skate.fi/staking',
       android: 'https://skate.fi/staking',
@@ -265,9 +269,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '23',
     image: '',
-    title: '오르빗 브릿지',
-    description:
-      '오르빗 브릿지는 각 메인넷 간의 토큰 전환을 지원하는 크로스체인 브릿지 서비스입니다.',
+    title: 'orbit_bridge_title',
+    description: 'orbit_bridge_description',
     urls: {
       web: 'https://bridge.orbitchain.io',
       android: 'https://bridge.orbitchain.io',
@@ -277,9 +280,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '24',
     image: '/images/icon_xdsea.png',
-    title: 'XDSea',
-    description:
-      'XDSea는 XDC 네트워크에 구축된 NFT를 사고팔 수 있는 전용 마켓플레이스입니다.',
+    title: 'xdsea_title',
+    description: 'xdsea_description',
     urls: {
       web: 'https://xdsea.com',
       android: 'https://xdsea.com',
@@ -289,9 +291,8 @@ export const mockItems: ItemDto[] = [
   {
     id: '25',
     image: '',
-    title: 'Celer cBridge',
-    description:
-      'Celer cBridge는 다중 블록체인 네트워크와 연결되어 빠르고 안전한 크로스체인 전송을 지원합니다.',
+    title: 'celer_cbridge_title',
+    description: 'celer_cbridge_description',
     urls: {
       web: 'https://cbridge.celer.network',
       android: 'https://cbridge.celer.network',
@@ -300,5 +301,18 @@ export const mockItems: ItemDto[] = [
   },
 ];
 
+// locale에 따라 번역된 아이템들을 반환하는 함수
+export function getLocalizedItems(locale: string = 'en'): ItemDto[] {
+  const translations = getTranslations(locale);
+
+  return mockItems.map((item) => ({
+    ...item,
+    title: getTranslatedText(item.title, translations),
+    description: getTranslatedText(item.description, translations),
+  }));
+}
+
 // 즐겨찾기 아이템들 (처음 5개를 기본 즐겨찾기로 설정)
-export const mockFavoriteItems: ItemDto[] = mockItems.slice(0, 5);
+export function getLocalizedFavoriteItems(locale: string = 'en'): ItemDto[] {
+  return getLocalizedItems(locale).slice(0, 5);
+}

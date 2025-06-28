@@ -3,8 +3,10 @@
 import Banner from './Banner';
 import ItemCard, { ItemCardSkeleton } from './ItemCard';
 import { useItems, useFavoriteItems } from '@/hooks/useDiscovery';
+import { useTranslations } from 'next-intl';
 
 export default function MainPage() {
+  const t = useTranslations();
   const {
     data: items = [],
     isLoading: isItemsLoading,
@@ -26,13 +28,13 @@ export default function MainPage() {
 
   const renderError = () => (
     <div className="flex items-center justify-center rounded-lg border border-red-200 bg-red-50 p-4 text-red-600 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
-      데이터를 불러오는 중 오류가 발생했습니다.
+      {t('common.error_loading_data')}
     </div>
   );
 
   const renderEmpty = () => (
     <div className="flex items-center justify-center rounded-lg border border-gray-200 bg-gray-50 p-4 text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
-      데이터가 없습니다.
+      {t('common.no_data')}
     </div>
   );
 
@@ -74,14 +76,14 @@ export default function MainPage() {
         <div className="space-y-4">
           <div>
             <h2 className="mb-4 text-base font-semibold text-gray-800 dark:text-white">
-              즐겨찾기
+              {t('list.dapp_favorite_title')}
             </h2>
             {renderFavoriteSection()}
           </div>
 
           <div>
             <h2 className="mt-8 mb-4 text-base font-semibold text-gray-800 dark:text-white">
-              목록
+              {t('list.dapp_list_title')}
             </h2>
             {renderItemsSection()}
           </div>

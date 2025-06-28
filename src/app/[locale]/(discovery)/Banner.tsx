@@ -4,12 +4,18 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Button } from '@/components/ui/button';
+import { useLocale, useTranslations } from 'next-intl';
+
 const Banner: React.FC = () => {
+  const locale = useLocale();
+  const t = useTranslations();
+
   const bannerData = [
     {
-      title:
-        '<span>디센트 지문인증형 지갑</span>으로<br /> 한층 더 강화된 보안을 경험하세요!',
-      buttonText: '구매하기',
+      title: t.rich('banner.dcent_title', {
+        highlight: (chunks) => <span>{chunks}</span>,
+      }),
+      buttonText: t('banner.dcent_button'),
       slideNumber: '1 / 2',
       image: '/images/banner_dcent.png',
     },
@@ -17,7 +23,7 @@ const Banner: React.FC = () => {
       title: '',
       buttonText: '',
       slideNumber: '2 / 2',
-      image: '/images/banner_mapo_en.png',
+      image: `/images/banner_mapo_${locale === 'ko' ? 'kr' : 'en'}.png`,
     },
   ];
 
@@ -72,8 +78,8 @@ const Banner: React.FC = () => {
               style={{ backgroundImage: `url(${banner.image})` }}
             >
               <div className="flex h-full w-full flex-1 flex-col items-start justify-between gap-6 pt-4 pb-4 text-white">
-                <h2 className="text-left text-lg font-semibold [&_span]:text-xl [&_span]:font-bold">
-                  <p dangerouslySetInnerHTML={{ __html: banner.title }} />
+                <h2 className="text-left text-lg font-semibold whitespace-pre-line [&_span]:text-xl [&_span]:font-bold">
+                  {banner.title}
                 </h2>
 
                 {banner.buttonText && (

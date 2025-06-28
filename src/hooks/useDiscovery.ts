@@ -1,6 +1,7 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import discoveryApis, { ItemDto } from '@/client/discovery';
 import { ResponseBaseObject } from '@/client/common/ResponseBaseObject';
+import { useLocaleQuery } from '@/hooks/locale/useLocaleQuery';
 
 // Query Keys
 export const discoveryKeys = {
@@ -11,7 +12,7 @@ export const discoveryKeys = {
 
 // 아이템 목록 조회
 export const useItems = () => {
-  return useQuery({
+  return useLocaleQuery({
     queryKey: discoveryKeys.items(),
     queryFn: discoveryApis.getItems,
     select: (data: ResponseBaseObject<ItemDto[]>) => data.payload,
@@ -20,7 +21,7 @@ export const useItems = () => {
 
 // 즐겨찾기 아이템 목록 조회
 export const useFavoriteItems = () => {
-  return useQuery({
+  return useLocaleQuery({
     queryKey: discoveryKeys.favoriteItems(),
     queryFn: discoveryApis.getFavoriteItems,
     select: (data: ResponseBaseObject<ItemDto[]>) => data.payload,

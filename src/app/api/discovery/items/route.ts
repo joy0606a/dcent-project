@@ -1,13 +1,27 @@
 import { NextResponse } from 'next/server';
-import { mockItems } from '@/app/api/mocks/discoveryData';
+import { getLocalizedItems } from '@/app/api/mocks/discoveryData';
 import { ResponseBaseObject } from '@/client/common/ResponseBaseObject';
 import { ItemsResponse } from '@/client/discovery';
 import { favoriteItemIds } from '../shared-state';
 
-export async function GET() {
+// Accept-Language 헤더에서 locale 추출
+function getLocaleFromHeaders(request: Request): string {
+  const acceptLanguage = request.headers.get('accept-language') || 'en';
+
+  // en, ko, en-US, ko-KR 등을 처리
+  if (acceptLanguage.toLowerCase().includes('ko')) {
+    return 'ko';
+  }
+  return 'en';
+}
+
+export async function GET(request: Request) {
   try {
-    // mockItems에서 favoriteItemIds에 포함되지 않은 아이템들만 필터링
-    const nonFavoriteItems = mockItems.filter(
+    const locale = getLocaleFromHeaders(request);
+    const localizedItems = getLocalizedItems(locale);
+
+    // localizedItems에서 favoriteItemIds에 포함되지 않은 아이템들만 필터링
+    const nonFavoriteItems = localizedItems.filter(
       (item) => !favoriteItemIds.has(item.id),
     );
 
