@@ -139,4 +139,8 @@
   .dcent-layout {
     @apply px-4 md:px-6;
   }
+
+  .dcent-layout-main {
+    @apply px-4 md:px-6 mt-[61px] mb-[80px];
+  }
 }
