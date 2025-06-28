@@ -5,12 +5,10 @@ export let favoriteItemIds = new Set(['1', '2', '3', '4', '5']);
 export function toggleFavoriteItem(itemId: string): boolean {
   if (favoriteItemIds.has(itemId)) {
     favoriteItemIds.delete(itemId);
-    console.log(`즐겨찾기에서 제거: ${itemId}`, Array.from(favoriteItemIds));
-    return false; // 제거됨
+    return false;
   } else {
     favoriteItemIds.add(itemId);
-    console.log(`즐겨찾기에 추가: ${itemId}`, Array.from(favoriteItemIds));
-    return true; // 추가됨
+    return true;
   }
 }
 

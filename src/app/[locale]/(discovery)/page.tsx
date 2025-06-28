@@ -1,7 +1,7 @@
 'use client';
 
 import Banner from './Banner';
-import ListItemCard from './ListItemCard';
+import ItemCard from './ItemCard';
 import { useItems, useFavoriteItems } from '@/hooks/useDiscovery';
 import { Loader2 } from 'lucide-react';
 
@@ -16,8 +16,6 @@ export default function MainPage() {
     isLoading: isFavoriteItemsLoading,
     error: favoriteItemsError,
   } = useFavoriteItems();
-
-  console.log({ favoriteItems, items });
 
   if (isItemsLoading || isFavoriteItemsLoading) {
     return (
@@ -59,7 +57,7 @@ export default function MainPage() {
             </h2>
             <div className="space-y-3">
               {favoriteItems.map((item) => (
-                <ListItemCard key={item.id} item={item} isBookmarked={true} />
+                <ItemCard key={item.id} item={item} isBookmarked={true} />
               ))}
             </div>
           </div>
@@ -70,7 +68,7 @@ export default function MainPage() {
             </h2>
             <div className="space-y-3">
               {items.map((item) => (
-                <ListItemCard key={item.id} item={item} isBookmarked={false} />
+                <ItemCard key={item.id} item={item} isBookmarked={false} />
               ))}
             </div>
           </div>
