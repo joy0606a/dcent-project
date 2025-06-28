@@ -2,6 +2,7 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import LanguageSwitcher from '@/components/layout/Header/LanguageSwitcher';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 const Header: React.FC = () => {
   const t = useTranslations('search');
@@ -9,9 +10,15 @@ const Header: React.FC = () => {
   return (
     <header className="dcent-layout fixed top-0 right-0 left-0 z-50 border-b border-gray-200 bg-white py-3">
       <div className="flex items-center justify-between gap-2">
-        {/* TODO: logo? */}
         <div className="flex items-center">
-          <h1 className="text-lg font-semibold text-gray-900">Dcent</h1>
+          <h1 className="text-lg font-semibold text-gray-900">
+            <Image
+              src="https://cdn.prod.website-files.com/668b3a82199c56fe12067652/668b3a82199c56fe12067710_logo_color.svg"
+              alt="Dcent"
+              width={88}
+              height={40}
+            />
+          </h1>
         </div>
 
         {/* Search Bar */}
