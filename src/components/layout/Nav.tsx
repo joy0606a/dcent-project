@@ -8,7 +8,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
 
-// TODO: hover 시 버튼 효과 없애기
 const Nav: React.FC = () => {
   const t = useTranslations('navigation');
 
@@ -18,7 +17,7 @@ const Nav: React.FC = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="flex h-12 flex-1 flex-col items-center gap-1 text-gray-400 hover:text-white"
+          className="flex h-12 flex-1 flex-col items-center gap-1 text-gray-400 hover:bg-gray-900 hover:text-white"
         >
           <Wallet size={32} />
           <span className="text-[10px]">{t('myWallet')}</span>
@@ -27,7 +26,7 @@ const Nav: React.FC = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="flex h-12 flex-1 flex-col items-center gap-1 text-gray-400 hover:text-white"
+          className="flex h-12 flex-1 flex-col items-center gap-1 text-gray-400 hover:bg-gray-900 hover:text-white"
         >
           <TrendingUp size={32} />
           <span className="text-[10px]">{t('insight')}</span>
@@ -36,7 +35,7 @@ const Nav: React.FC = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="flex h-12 flex-1 flex-col items-center gap-1 text-gray-900 hover:bg-gray-100"
+          className="flex h-12 flex-1 flex-col items-center gap-1 text-gray-900 hover:bg-gray-900"
         >
           <div className="flex h-full w-full items-center justify-center rounded-md bg-white">
             <ArrowLeftRight size={32} className="text-gray-900" />
@@ -46,7 +45,7 @@ const Nav: React.FC = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="flex h-12 flex-1 flex-col items-center gap-1 text-green-400 hover:text-green-300"
+          className="flex h-12 flex-1 flex-col items-center gap-1 text-green-400 hover:bg-gray-900 hover:text-green-400"
         >
           <Compass size={32} />
           <span className="text-[10px]">{t('discovery')}</span>
@@ -55,7 +54,7 @@ const Nav: React.FC = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="flex h-12 flex-1 flex-col items-center gap-1 text-gray-400 hover:text-white"
+          className="flex h-12 flex-1 flex-col items-center gap-1 text-gray-400 hover:bg-gray-900 hover:text-white"
         >
           <Settings size={32} />
           <span className="text-[10px]">{t('settings')}</span>
