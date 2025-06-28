@@ -32,4 +32,4 @@ export const useUpdateFavoriteItem = () => {
   return useMutation({
     mutationFn: discoveryApis.updateFavoriteItem,
   });
-}; 
+};

@@ -1,23 +1,26 @@
 'use client';
 
-import {useLocale, useTranslations} from 'next-intl';
-import {useRouter, usePathname} from '@/i18n/routing';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter, usePathname } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
 
 export default function LanguageSwitcher() {
-
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
   const handleLanguageChange = (newLocale: string) => {
-    router.replace(pathname, {locale: newLocale});
+    router.replace(pathname, { locale: newLocale });
   };
 
   return (
     <div className="flex items-center gap-2">
-      <Button size="icon" className="bg-muted-foreground/10 text-foreground" onClick={() => handleLanguageChange(locale === 'ko' ? 'en' : 'ko')}>
+      <Button
+        size="icon"
+        className="bg-muted-foreground/10 text-foreground"
+        onClick={() => handleLanguageChange(locale === 'ko' ? 'en' : 'ko')}
+      >
         <Globe size={24} />
       </Button>
 
@@ -35,4 +38,4 @@ export default function LanguageSwitcher() {
       </select> */}
     </div>
   );
-} 
+}

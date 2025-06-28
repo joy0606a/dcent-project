@@ -17,4 +17,4 @@ export function toggleFavoriteItem(itemId: string): boolean {
 // 즐겨찾기 상태 확인 함수
 export function isFavoriteItem(itemId: string): boolean {
   return favoriteItemIds.has(itemId);
-} 
+}

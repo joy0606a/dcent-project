@@ -1,68 +1,73 @@
 import { ResponseBaseObject } from '@/client/common/ResponseBaseObject';
 
 export type ItemDto = {
-    id: string;
-    image: string;
-    title: string;
-    description: string;
-    urls: {
-        web?: string;
-        android?: string;
-        ios?: string;
-    };
-}
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+  urls: {
+    web?: string;
+    android?: string;
+    ios?: string;
+  };
+};
 
 export type FavoriteItemsResponse = ItemDto[];
 
 export type ItemsResponse = ItemDto[];
 
 const API_URL = process.env.API_BASE_URL;
-console.log({API_URL});
 
-export const getFavoriteItems = async (): Promise<ResponseBaseObject<FavoriteItemsResponse>> => {
-    const response = await fetch(`${API_URL}/discovery/favorite-items`);
-    const data = await response.json();
-    
-    // API 응답의 error.code가 0이 아니면 에러로 처리
-    if (data.error && data.error.code !== 0) {
-        throw new Error(data.error.message || 'Failed to get favorite items');
-    }
-    
-    return data;
-}
+export const getFavoriteItems = async (): Promise<
+  ResponseBaseObject<FavoriteItemsResponse>
+> => {
+  const response = await fetch(`${API_URL}/discovery/favorite-items`);
+  const data = await response.json();
 
-export const updateFavoriteItem = async (itemId: string): Promise<ResponseBaseObject<void>> => {
-    const response = await fetch(`${API_URL}/discovery/favorite-items`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ itemId }),
-    });
-    const data = await response.json();
-    
-    // API 응답의 error.code가 0이 아니면 에러로 처리
-    if (data.error && data.error.code !== 0) {
-        throw new Error(data.error.message || 'Failed to update favorite item');
-    }
-    
-    return data;
-}
+  // API 응답의 error.code가 0이 아니면 에러로 처리
+  if (data.error && data.error.code !== 0) {
+    throw new Error(data.error.message || 'Failed to get favorite items');
+  }
 
-export const getItems = async (): Promise<ResponseBaseObject<ItemsResponse>> => {   
-    const response = await fetch(`${API_URL}/discovery/items`);   
-    const data = await response.json();
-    
-    // API 응답의 error.code가 0이 아니면 에러로 처리
-    if (data.error && data.error.code !== 0) {
-        throw new Error(data.error.message || 'Failed to get items');
-    }
-    
-    return data;
-}
+  return data;
+};
+
+export const updateFavoriteItem = async (
+  itemId: string,
+): Promise<ResponseBaseObject<void>> => {
+  const response = await fetch(`${API_URL}/discovery/favorite-items`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ itemId }),
+  });
+  const data = await response.json();
+
+  // API 응답의 error.code가 0이 아니면 에러로 처리
+  if (data.error && data.error.code !== 0) {
+    throw new Error(data.error.message || 'Failed to update favorite item');
+  }
+
+  return data;
+};
+
+export const getItems = async (): Promise<
+  ResponseBaseObject<ItemsResponse>
+> => {
+  const response = await fetch(`${API_URL}/discovery/items`);
+  const data = await response.json();
+
+  // API 응답의 error.code가 0이 아니면 에러로 처리
+  if (data.error && data.error.code !== 0) {
+    throw new Error(data.error.message || 'Failed to get items');
+  }
+
+  return data;
+};
 
 export default {
-    getFavoriteItems,
-    updateFavoriteItem,
-    getItems,
-}
+  getFavoriteItems,
+  updateFavoriteItem,
+  getItems,
+};

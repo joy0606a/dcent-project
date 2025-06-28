@@ -7,26 +7,28 @@ import { favoriteItemIds } from '../shared-state';
 export async function GET() {
   try {
     // mockItems에서 favoriteItemIds에 포함되지 않은 아이템들만 필터링
-    const nonFavoriteItems = mockItems.filter(item => !favoriteItemIds.has(item.id));
-    
+    const nonFavoriteItems = mockItems.filter(
+      (item) => !favoriteItemIds.has(item.id),
+    );
+
     const response: ResponseBaseObject<ItemsResponse> = {
       error: {
         code: 0,
-        message: 'Success'
+        message: 'Success',
       },
-      payload: nonFavoriteItems
+      payload: nonFavoriteItems,
     };
-    
+
     return NextResponse.json(response);
   } catch (error) {
     const errorResponse: ResponseBaseObject<ItemsResponse> = {
       error: {
         code: 500,
-        message: 'Failed to retrieve items'
+        message: 'Failed to retrieve items',
       },
-      payload: []
+      payload: [],
     };
-    
+
     return NextResponse.json(errorResponse, { status: 500 });
   }
-} 
+}

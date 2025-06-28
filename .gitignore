@@ -51,3 +51,9 @@ next-env.d.ts
 
 # history
 .history
+
+# vscode
+.vscode
+
+# logs
+logs

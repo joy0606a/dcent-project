@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -141,6 +141,49 @@
   }
 
   .dcent-layout-main {
-    @apply px-4 md:px-6 mt-[61px] mb-[80px];
+    @apply mt-[61px] mb-[80px] px-4 md:px-6;
   }
+}
+
+/* Banner Carousel Styles */
+.banner-carousel {
+  margin: 0 !important;
+}
+
+.banner-carousel .carousel-root {
+  margin: 0 !important;
+}
+
+.banner-carousel .carousel {
+  margin: 0 !important;
+}
+
+.banner-carousel .carousel .slider-wrapper {
+  margin: 0 !important;
+}
+
+.banner-carousel .carousel .slider {
+  margin: 0 !important;
+}
+
+.banner-carousel .carousel .slide {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.banner-carousel .control-dots {
+  position: absolute !important;
+  bottom: 16px !important;
+  right: 24px !important;
+  left: auto !important;
+  width: auto !important;
+  text-align: right !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.banner-carousel .control-dots .dot {
+  box-shadow: none !important;
+  margin: 0 2px !important;
+  opacity: 1 !important;
 }

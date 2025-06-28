@@ -22,7 +22,7 @@ export default function QueryProvider({ children }: QueryProviderProps) {
             retry: 1,
           },
         },
-      })
+      }),
   );
 
   return (
@@ -31,4 +31,4 @@ export default function QueryProvider({ children }: QueryProviderProps) {
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
-} 
+}
